@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Gtk;
 using MySql.Data.MySqlClient;
 
@@ -21,15 +22,18 @@ public partial class MainWindow: Gtk.Window
 
 		MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader ();
 
-		treeView.AppendColumn ("id", new CellRendererText (), "text", 0);
-		treeView.AppendColumn ("categoria", new CellRendererText (), "text", 1);
-		treeView.AppendColumn ("nombre", new CellRendererText (), "text", 2);
-		treeView.AppendColumn ("precio", new CellRendererText (), "text", 3);
+		string[] columnNames = getColumnNames (mySqlDataReader);
 
-		ListStore listStore = new ListStore (typeof(String), typeof(String), typeof(String), typeof(String));
+		for (int index = 0; index< columnNames.Length; index++) {
+			treeView.AppendColumn (columnNames [index], new CellRendererText (), "text", index);
+		}
+
+		Type[] types = getTypes (mySqlDataReader.FieldCount);
+		ListStore listStore = new ListStore (types);
 
 		while (mySqlDataReader.Read()) {
-			listStore.AppendValues (mySqlDataReader [0].ToString(), mySqlDataReader [1], mySqlDataReader [2].ToString(), mySqlDataReader [3].ToString());
+			string[] values = getValues (mySqlDataReader);
+			listStore.AppendValues (values);
 		}
 
 		treeView.Model = listStore;
@@ -37,6 +41,33 @@ public partial class MainWindow: Gtk.Window
 
 		mySqlDataReader.Close ();
 		mySqlConnection.Close ();
+
+	}
+
+	private string[] getColumnNames(MySqlDataReader mySqlDataReader){
+		List<String> columnNames = new List<string> ();
+		int count = mySqlDataReader.FieldCount;
+		for (int index = 0; index < count; index++){
+			columnNames.Add(mySqlDataReader.GetName(index));
+		}
+		return columnNames.ToArray();
+	}
+
+	private Type[] getTypes(int count){
+		List<Type> types = new List<Type> ();
+		for (int index = 0; index < count; index++) {
+			types.Add (typeof(String));
+		}
+		return  types.ToArray ();
+	}
+
+	private string[] getValues(MySqlDataReader mySqlDataReader){
+		List<string> values = new List<string> ();
+		int count = mySqlDataReader.FieldCount;
+		for (int index = 0; index < count; index++) {
+			values.Add(mySqlDataReader[index].ToString());
+		}
+		return values.ToArray ();
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
