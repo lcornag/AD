@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PArticulo", "PArticulo\PArticulo.csproj", "{26B7F3FF-CCF7-4206-809B-94B2BD55752C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26B7F3FF-CCF7-4206-809B-94B2BD55752C}.Debug|x86.ActiveCfg = Debug|x86
+		{26B7F3FF-CCF7-4206-809B-94B2BD55752C}.Debug|x86.Build.0 = Debug|x86
+		{26B7F3FF-CCF7-4206-809B-94B2BD55752C}.Release|x86.ActiveCfg = Release|x86
+		{26B7F3FF-CCF7-4206-809B-94B2BD55752C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = PArticulo\PArticulo.csproj
+	EndGlobalSection
+EndGlobal
