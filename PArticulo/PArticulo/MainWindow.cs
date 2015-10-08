@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Gtk;
 using MySql.Data.MySqlClient;
@@ -12,43 +13,43 @@ public partial class MainWindow: Gtk.Window
 
 
 		Console.WriteLine ("MainWindow ctor.");
-		MySqlConnection mySqlConnection = new MySqlConnection (
+		IDbConnection dbConnection = new MySqlConnection (
 			"Database=dbprueba;Data Source=localhost;User Id=root;Password=sistemas"
 		);
-		mySqlConnection.Open ();
+		dbConnection.Open ();
 
-		MySqlCommand mySqlCommand = mySqlConnection.CreateCommand ();
-		mySqlCommand.CommandText = "select * from articulo";
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
+		dbCommand.CommandText = "select * from articulo";
 
-		MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader ();
+		IDataReader dataReader = dbCommand.ExecuteReader ();
 
-		string[] columnNames = getColumnNames (mySqlDataReader);
+		string[] columnNames = getColumnNames (dataReader);
 
 		for (int index = 0; index< columnNames.Length; index++) {
 			treeView.AppendColumn (columnNames [index], new CellRendererText (), "text", index);
 		}
 
-		Type[] types = getTypes (mySqlDataReader.FieldCount);
+		Type[] types = getTypes (dataReader.FieldCount);
 		ListStore listStore = new ListStore (types);
 
-		while (mySqlDataReader.Read()) {
-			string[] values = getValues (mySqlDataReader);
+		while (dataReader.Read()) {
+			string[] values = getValues (dataReader);
 			listStore.AppendValues (values);
 		}
 
 		treeView.Model = listStore;
 
 
-		mySqlDataReader.Close ();
-		mySqlConnection.Close ();
+		dataReader.Close ();
+		dbConnection.Close ();
 
 	}
 
-	private string[] getColumnNames(MySqlDataReader mySqlDataReader){
+	private string[] getColumnNames(IDataReader dataReader){
 		List<String> columnNames = new List<string> ();
-		int count = mySqlDataReader.FieldCount;
+		int count = dataReader.FieldCount;
 		for (int index = 0; index < count; index++){
-			columnNames.Add(mySqlDataReader.GetName(index));
+			columnNames.Add(dataReader.GetName(index));
 		}
 		return columnNames.ToArray();
 	}
@@ -61,11 +62,11 @@ public partial class MainWindow: Gtk.Window
 		return  types.ToArray ();
 	}
 
-	private string[] getValues(MySqlDataReader mySqlDataReader){
+	private string[] getValues(IDataReader dataReader){
 		List<string> values = new List<string> ();
-		int count = mySqlDataReader.FieldCount;
+		int count = dataReader.FieldCount;
 		for (int index = 0; index < count; index++) {
-			values.Add(mySqlDataReader[index].ToString());
+			values.Add(dataReader[index].ToString());
 		}
 		return values.ToArray ();
 	}
