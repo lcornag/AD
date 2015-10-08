@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 using Gtk;
 using MySql.Data.MySqlClient;
+using PArticulo;
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -10,15 +11,10 @@ public partial class MainWindow: Gtk.Window
 	{
 
 		Build ();
-
-
 		Console.WriteLine ("MainWindow ctor.");
-		IDbConnection dbConnection = new MySqlConnection (
-			"Database=dbprueba;Data Source=localhost;User Id=root;Password=sistemas"
-		);
-		dbConnection.Open ();
 
-		IDbCommand dbCommand = dbConnection.CreateCommand ();
+
+		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand ();
 		dbCommand.CommandText = "select * from articulo";
 
 		IDataReader dataReader = dbCommand.ExecuteReader ();
@@ -41,7 +37,7 @@ public partial class MainWindow: Gtk.Window
 
 
 		dataReader.Close ();
-		dbConnection.Close ();
+		App.Instance.DbConnection.Close ();
 
 	}
 
