@@ -14,8 +14,10 @@ public partial class MainWindow: Gtk.Window
 		Build ();
 		Console.WriteLine ("MainWindow ctor.");
 
+		QueryResult queryResult = PersisterHelper.Get("Select * from articulo");
 
-		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand ();
+		IDbConnection dbConnection = App.Instance.DbConnection;
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
 		dbCommand.CommandText = "select * from articulo";
 
 		IDataReader dataReader = dbCommand.ExecuteReader ();
@@ -28,8 +30,9 @@ public partial class MainWindow: Gtk.Window
 			int column = index;
 			treeView.AppendColumn (columnNames [index], cellRendererText, 
 				delegate(TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter) {
-				IList row = (IList)tree_model.GetValue(iter, 0);
-				cellRendererText.Text = "[" + row[column].ToString() + "]";
+					IList row = (IList)tree_model.GetValue(iter, 0);
+					cellRendererText.Text = row[column].ToString();
+
 				});
 			//treeView.AppendColumn (columnNames [index], new CellRendererText (), "text", index);
 		}
