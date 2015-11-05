@@ -13,6 +13,7 @@ namespace PCategoria
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			Application.Run ();
+			//prueba
 		}
 	}
 }
