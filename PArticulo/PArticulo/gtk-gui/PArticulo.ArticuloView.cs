@@ -57,6 +57,7 @@ namespace PArticulo
 			w3.BottomAttach = ((uint)(2));
 			w3.LeftAttach = ((uint)(1));
 			w3.RightAttach = ((uint)(2));
+			w3.XOptions = ((global::Gtk.AttachOptions)(4));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
 			this.entryNombre = new global::Gtk.Entry ();
@@ -101,7 +102,7 @@ namespace PArticulo
 			w7.XOptions = ((global::Gtk.AttachOptions)(4));
 			w7.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.spinButtonPrecio = new global::Gtk.SpinButton (0, 100000, 1);
+			this.spinButtonPrecio = new global::Gtk.SpinButton (0, 1000000, 1);
 			this.spinButtonPrecio.CanFocus = true;
 			this.spinButtonPrecio.Name = "spinButtonPrecio";
 			this.spinButtonPrecio.Adjustment.PageIncrement = 10;
@@ -114,6 +115,7 @@ namespace PArticulo
 			w8.BottomAttach = ((uint)(3));
 			w8.LeftAttach = ((uint)(1));
 			w8.RightAttach = ((uint)(2));
+			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			this.vbox1.Add (this.table1);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.table1]));

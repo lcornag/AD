@@ -9,7 +9,7 @@
     <widget-library name="../bin/Debug/PArticulo.exe" internal="true" />
     <widget-library name="../../../PSerpisAd/PSerpisAd/bin/Debug/PSerpisAd.dll" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="400 351">
+  <widget class="Gtk.Window" id="MainWindow" design-size="400 300">
     <action-group name="Default">
       <action id="refreshAction">
         <property name="Type">Action</property>
@@ -27,7 +27,7 @@
     <property name="WindowPosition">CenterOnParent</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
-      <widget class="Gtk.VBox" id="vbox2">
+      <widget class="Gtk.VBox" id="vbox1">
         <property name="MemberName" />
         <property name="Spacing">6</property>
         <child>
@@ -88,7 +88,7 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
-            <node name="toolbar1" type="Toolbar">
+            <node name="__gtksharp_76_Stetic_Editor_ActionToolbar" type="Toolbar">
               <node type="Toolitem" action="saveAction" />
             </node>
           </widget>
@@ -126,9 +126,10 @@
                 <property name="BottomAttach">2</property>
                 <property name="LeftAttach">1</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
+                <property name="XOptions">Fill</property>
                 <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
+                <property name="XExpand">False</property>
                 <property name="XFill">True</property>
                 <property name="XShrink">False</property>
                 <property name="YExpand">False</property>
@@ -218,7 +219,7 @@
               <widget class="Gtk.SpinButton" id="spinButtonPrecio">
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
-                <property name="Upper">100000</property>
+                <property name="Upper">1000000</property>
                 <property name="PageIncrement">10</property>
                 <property name="StepIncrement">1</property>
                 <property name="ClimbRate">1</property>
@@ -230,9 +231,10 @@
                 <property name="BottomAttach">3</property>
                 <property name="LeftAttach">1</property>
                 <property name="RightAttach">2</property>
-                <property name="AutoSize">False</property>
+                <property name="AutoSize">True</property>
+                <property name="XOptions">Fill</property>
                 <property name="YOptions">Fill</property>
-                <property name="XExpand">True</property>
+                <property name="XExpand">False</property>
                 <property name="XFill">True</property>
                 <property name="XShrink">False</property>
                 <property name="YExpand">False</property>

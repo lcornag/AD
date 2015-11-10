@@ -1,35 +1,36 @@
-using System;
 using Gtk;
+using System;
 using System.Collections;
+using System.Data;
 using SerpisAd;
-using PArticulo;
 
 namespace PArticulo
 {
 	public partial class ArticuloView : Gtk.Window
 	{
 		public ArticuloView () : 
-				base(Gtk.WindowType.Toplevel)
+			base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-
-			entryNombre.Text = "nuevo";
-
 			QueryResult queryResult = PersisterHelper.Get ("select * from categoria");
-			CellRendererText crt = new CellRendererText ();
-			comboBoxCategoria.PackStart (crt,false);
-			comboBoxCategoria.SetCellDataFunc(crt,
-				delegate(CellLayout cell_layout, CellRenderer CellView, TreeModel tree_model, TreeIter iter){
-				IList row = (IList)tree_model.GetValue(iter, 0);
-				crt.Text =row[1].ToString();
-				});
-			ListStore listStore = new ListStore (typeof(IList));
-			foreach (IList row in queryResult.Rows) {
-				listStore.AppendValues (row);
-			}
+			ComboBoxHelper.Fill (comboBoxCategoria, queryResult);
 
-			comboBoxCategoria.Model = listStore;
+			saveAction.Activated += delegate {	save();	};
+		}
 
+		private void save() {
+			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand ();
+			dbCommand.CommandText = "insert into articulo (nombre, categoria, precio) " +
+				"values (@nombre, @categoria, @precio)";
+
+			string nombre = entryNombre.Text;
+			object categoria = ComboBoxHelper.GetId (comboBoxCategoria);
+			decimal precio = Convert.ToDecimal(spinButtonPrecio.Value);
+
+			DbCommandHelper.AddParameter (dbCommand, "nombre", nombre);
+			DbCommandHelper.AddParameter (dbCommand, "categoria", categoria);
+			DbCommandHelper.AddParameter (dbCommand, "precio", precio);
+			dbCommand.ExecuteNonQuery ();
 		}
 	}
 }

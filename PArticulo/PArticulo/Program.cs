@@ -2,15 +2,14 @@ using System;
 using Gtk;
 using MySql.Data.MySqlClient;
 
-using PArticulo;
 using SerpisAd;
 
-namespace PArticulo{
-
-	class MainClass	{
-
-		public static void Main (string[] args)	{
-
+namespace PArticulo
+{
+	class MainClass
+	{
+		public static void Main (string[] args)
+		{
 			App.Instance.DbConnection = new MySqlConnection (
 				"Database=dbprueba;Data Source=localhost;User Id=root;Password=sistemas"
 				);
