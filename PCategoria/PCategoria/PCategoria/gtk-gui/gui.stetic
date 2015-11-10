@@ -99,7 +99,7 @@
           <widget class="Gtk.Toolbar" id="toolbar1">
             <property name="MemberName" />
             <property name="ShowArrow">False</property>
-            <node name="__gtksharp_90_Stetic_Editor_ActionToolbar" type="Toolbar">
+            <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="refreshAction1" />
               <node type="Toolitem" action="saveAction" />
             </node>
