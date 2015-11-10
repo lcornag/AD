@@ -15,6 +15,7 @@ namespace SerpisAd
 				IList row = (IList)tree_model.GetValue(iter, 0);
 				cellRendererText.Text = row[1].ToString();
 			});
+
 			ListStore listStore = new ListStore (typeof(IList));
 			//TODO localización de "sin asignar"
 			IList first = new object[]{null, "<sin asignar>"};
