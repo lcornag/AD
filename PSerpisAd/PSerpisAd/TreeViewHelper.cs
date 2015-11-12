@@ -32,6 +32,25 @@ namespace SerpisAd
 				treeView.RemoveColumn (treeViewColumn);
 			}
 		}
+		public static object GetId(TreeView treeView){
+			TreeIter treeIter;
+			if (!treeView.Selection.GetSelected (out treeIter)) {
+				return null;
+			}
+			treeView.Selection.GetSelected(out treeIter);
+			IList row = (IList)treeView.Model.GetValue(treeIter,0);
+			if (row == null) {
+				return null;
+			}
+			return row [0];
+		}
+		public static bool IsSelected(TreeView treeView) {
+			TreeIter treeIter;
+			return treeView.Selection.GetSelected(out treeIter);
+			/*o bien
+		 * return treeView.Selection.CountSelectedRows() !=0;
+		*/
+		}
 	}
 }
 
