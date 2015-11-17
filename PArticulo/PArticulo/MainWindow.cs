@@ -23,14 +23,22 @@ public partial class MainWindow: Gtk.Window {
 			fillTreeView ();
 		};
 
+		editAction.Activated += delegate {
+			object id = TreeViewHelper.GetId (treeView);
+			new ArticuloView(id);
+		};
+
 		deleteAction.Activated += delegate {
 			object id = TreeViewHelper.GetId(treeView);
 			Console.WriteLine("click en deleteAction id={0}",id);
 			delete(id);
 		};
+
 		treeView.Selection.Changed += delegate {
 			Console.WriteLine ("treeView.Selection.Changed ha ocurrido");
-			deleteAction.Sensitive = TreeViewHelper.IsSelected(treeView);
+			bool isSelected = TreeViewHelper.IsSelected(treeView);
+			deleteAction.Sensitive = isSelected;
+			editAction.Sensitive = isSelected;
 		};
 
 		deleteAction.Sensitive = false;

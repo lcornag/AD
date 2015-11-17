@@ -7,7 +7,7 @@ namespace SerpisAd
 {
 	public class ComboBoxHelper
 	{
-		public static void Fill(ComboBox comboBox, QueryResult queryResult) {
+		public static void Fill(ComboBox comboBox, QueryResult queryResult, object id) {
 			CellRendererText cellRendererText = new CellRendererText ();
 			comboBox.PackStart (cellRendererText, false);
 			comboBox.SetCellDataFunc (cellRendererText, 
@@ -19,12 +19,16 @@ namespace SerpisAd
 			ListStore listStore = new ListStore (typeof(IList));
 			//TODO localización de "sin asignar"
 			IList first = new object[]{null, "<sin asignar>"};
-			TreeIter treeIterFirst = listStore.AppendValues (first);
-			foreach (IList row in queryResult.Rows)
-				listStore.AppendValues (row);
+			TreeIter treeIterId = listStore.AppendValues (first);
+			foreach (IList row in queryResult.Rows) {
+				TreeIter treeIter = listStore.AppendValues (row);
+				if(row[0].Equals(id)){
+					treeIterId= treeIter;
+				}
+			}
 			comboBox.Model = listStore;
 			//comboBox.Active = 0;
-			comboBox.SetActiveIter (treeIterFirst);
+			comboBox.SetActiveIter (treeIterId);
 		}
 		
 		public static object GetId(ComboBox comboBox) {
