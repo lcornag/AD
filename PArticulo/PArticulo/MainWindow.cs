@@ -1,6 +1,6 @@
 using System;
 using Gtk;
-
+using System.Data;
 using SerpisAd;
 using PArticulo;
 using System.Collections;
@@ -35,10 +35,16 @@ public partial class MainWindow: Gtk.Window {
 
 		deleteAction.Sensitive = false;
 	}
-	private void delete(object IDictionary){
-		if (WindowHelper.ConfirmDelete(this)) {
-			Console.WriteLine ("Dice que eliminar si");
+	private void delete(object id){
+		if (!WindowHelper.ConfirmDelete (this)) {
+			return;
 		}
+		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand ();
+		dbCommand.CommandText = "delete from articulo where id = @id";
+		DbCommandHelper.AddParameter (dbCommand, "id", id);
+		dbCommand.ExecuteNonQuery ();
+		fillTreeView ();
+		
 	}
 
 	private void fillTreeView(){
