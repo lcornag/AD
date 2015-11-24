@@ -10,8 +10,9 @@ namespace PArticulo {
 
 		private object id = null;
 		private string nombre = "";
-		private decimal precio = 0;
 		private object categoria = null;
+		private decimal precio = 0;
+
 
 		public ArticuloView () : base(Gtk.WindowType.Toplevel) {
 
@@ -90,10 +91,11 @@ namespace PArticulo {
 			categoria = ComboBoxHelper.GetId (comboBoxCategoria);
 			precio = Convert.ToDecimal(spinButtonPrecio.Value);
 
+			DbCommandHelper.AddParameter (dbCommand, "id", id);
 			DbCommandHelper.AddParameter (dbCommand, "nombre", nombre);
 			DbCommandHelper.AddParameter (dbCommand, "categoria", categoria);
 			DbCommandHelper.AddParameter (dbCommand, "precio", precio);
-			DbCommandHelper.AddParameter (dbCommand, "id", id);
+
 
 			dbCommand.ExecuteNonQuery ();
 			Destroy ();
