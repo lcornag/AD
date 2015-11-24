@@ -40,7 +40,7 @@ public partial class MainWindow: Gtk.Window {
 			deleteAction.Sensitive = isSelected;
 			editAction.Sensitive = isSelected;
 		};
-
+		editAction.Sensitive = false;
 		deleteAction.Sensitive = false;
 	}
 	private void delete(object id){
