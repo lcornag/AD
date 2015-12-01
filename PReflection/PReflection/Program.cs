@@ -28,7 +28,9 @@ namespace PReflection
 //			articulo.Nombre = "nuevo 33";
 //			articulo.Categoria = 2;
 //			articulo.Precio = decimal.Parse("3,5");
-			setValues(articulo, new object[]{33L,"nuevo 33 modificado",3L,decimal.Parse("33,33")});
+			setValues(articulo, new object[]{
+									33L,"nuevo 33 modificado",3L,decimal.Parse("33,33")
+								});
 			showObject (articulo);
 
 		}
@@ -44,9 +46,18 @@ namespace PReflection
 		}
 		private static void showObject(object obj){
 			Type type = obj.GetType();
+			if (!(obj is Attribute)) {
+				object[] attributes = type.GetCustomAttributes (true);
+				foreach (Attribute attribute in attributes) {
+					showObject (attribute);
+				}
+			}
 			PropertyInfo[] propertyInfos = type.GetProperties ();
 			foreach(PropertyInfo propertyInfo in propertyInfos){
-				Console.WriteLine("{0} = {1}",propertyInfo.Name,propertyInfo.GetValue(obj,null));
+				if (propertyInfo.IsDefined (typeof(IdAttribute), true)) {
+					Console.WriteLine ("{0} decorado con IdAttribute", propertyInfo.Name);
+				}
+				Console.WriteLine("{0} = {1}" , propertyInfo.Name , propertyInfo.GetValue(obj,null));
 			}
 		}
 		private static void setValues(object obj, object[] values){
@@ -55,10 +66,29 @@ namespace PReflection
 			int index = 0;
 
 			foreach (PropertyInfo propertyInfo in propertyInfos) {
-				propertyInfo.SetValue (obj, values [index++], null);
+				propertyInfo.SetValue (obj , values [index++] , null);
 			}
 		}
 	}
+	
+	public class IdAttribute : Attribute {
+	}
+
+
+	public class TableAttribute : Attribute {
+		private string name;
+
+		public string Name {
+			get {
+				return name;
+			}
+			set {
+				name = value;
+			}
+		}
+	}
+
+
 
 	public class Foo{
 	
@@ -75,6 +105,7 @@ namespace PReflection
 		}
 	}
 
+	[TableAttribute(Name = "article")] // O [Table]
 	public class Articulo{
 		public Articulo(){
 		}
@@ -84,6 +115,7 @@ namespace PReflection
 		private object categoria;
 		private decimal precio;
 
+		[Id] //Se suele poner [IdAttribute]
 		public object Id {
 			get{ return id;}
 			set{ id = value;}
@@ -103,6 +135,6 @@ namespace PReflection
 			get {return precio;}
 			set {precio = value;}
 		}
-
 	}
+
 }
