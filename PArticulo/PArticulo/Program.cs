@@ -4,12 +4,11 @@ using MySql.Data.MySqlClient;
 
 using SerpisAd;
 
-namespace PArticulo
-{
-	class MainClass
-	{
-		public static void Main (string[] args)
-		{
+namespace PArticulo {
+
+	class MainClass	{
+
+		public static void Main (string[] args)	{
 			App.Instance.DbConnection = new MySqlConnection (
 				"Database=dbprueba;Data Source=localhost;User Id=root;Password=sistemas"
 				);
@@ -18,7 +17,8 @@ namespace PArticulo
 			Application.Init ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
-			Application.Run ();
+
+			Application.Run();
 
 			App.Instance.DbConnection.Close ();
 		}

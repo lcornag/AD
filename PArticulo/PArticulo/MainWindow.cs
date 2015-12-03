@@ -11,9 +11,7 @@ public partial class MainWindow: Gtk.Window {
 
 		Build ();
 		Title = "Artículo";
-		Console.WriteLine ("MainWindow ctor.");
-		QueryResult queryResult = PersisterHelper.Get ("select * from articulo");
-		TreeViewHelper.Fill (treeView, queryResult);
+		fillTreeView ();
 
 		newAction.Activated += delegate {
 			new ArticuloView ();
@@ -40,6 +38,7 @@ public partial class MainWindow: Gtk.Window {
 			deleteAction.Sensitive = isSelected;
 			editAction.Sensitive = isSelected;
 		};
+
 		editAction.Sensitive = false;
 		deleteAction.Sensitive = false;
 	}
@@ -61,7 +60,6 @@ public partial class MainWindow: Gtk.Window {
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)	{
-
 		Application.Quit ();
 		a.RetVal = true;
 	}

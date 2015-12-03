@@ -6,35 +6,48 @@ using SerpisAd;
 
 namespace PArticulo {
 
-	public delegate void SaveDelegate(Articulo articulo);
 
 	public partial class ArticuloView : Gtk.Window {
-		public Articulo articulo;
-		public SaveDelegate save;
 
+		private Articulo articulo;
 
 		public ArticuloView () : base(Gtk.WindowType.Toplevel) {
+			articulo = new Articulo ();
+			articulo.Nombre = "";
 			init ();
-			save = ArticuloPersister.Insert;
-
+			saveAction.Activated += delegate{ insert(); };
 		}
 
 		public ArticuloView(object id) : base(WindowType.Toplevel) {
-			articulo = ArticuloPersister.Load (id);
+			articulo = ArticuloPersister.Load(id);
 			init ();
-			save = ArticuloPersister.Update;
-
+			saveAction.Activated += delegate{ update(); };
 		}
 
 		public void init(){
 			this.Build ();
-			articulo.Nombre = entryNombre.Text ;
+			entryNombre.Text = articulo.Nombre;
 			QueryResult queryResult = PersisterHelper.Get ("select * from categoria");
 			ComboBoxHelper.Fill (comboBoxCategoria, queryResult, articulo.Categoria);
 			spinButtonPrecio.Value=Convert.ToDouble(articulo.Precio);
+		}
 
-			saveAction.Activated += delegate {save(articulo);};
+		public void insert() {
+			updateModel();
+			ArticuloPersister.Insert (articulo);
+			Destroy ();
+		}
+		public void update(){
+			updateModel ();
+			ArticuloPersister.Update (articulo);
+			Destroy ();
+		}
+	
+		private void updateModel(){
+			articulo.Nombre = entryNombre.Text;
+			articulo.Categoria = ComboBoxHelper.GetId(comboBoxCategoria);
+			articulo.Precio = Convert.ToDecimal(spinButtonPrecio.Value);
+		}
 
-		}			
 	}
 }
