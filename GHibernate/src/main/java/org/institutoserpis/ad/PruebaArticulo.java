@@ -33,12 +33,18 @@ public class PruebaArticulo {
 	}
 	
 	private static void show(Articulo articulo){
-		System.out.printf("%5s %-40s %5s %10s\n", 
+		System.out.printf("%5s %-40s %25s %10s\n", 
 				articulo.getId(), 
 				articulo.getNombre(), 
-				articulo.getCategoria(), 
+				format(articulo.getCategoria()), 
 				articulo.getPrecio()
 		);
+	}
+	
+	private static String format(Categoria categoria){
+		if(categoria == null)
+			return null;
+		return String.format("%4s %-20s", categoria.getId(), categoria.getNombre());
 	}
 	
 	private static void query(){
@@ -57,11 +63,14 @@ public class PruebaArticulo {
 		System.out.println("persist:");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
+		
 		Articulo articulo = new Articulo();
 		articulo.setNombre("nuevo" + new Date());
+		
 		entityManager.persist(articulo);
 		entityManager.getTransaction().commit();
 		entityManager.close();
+		
 		show(articulo);
 		return articulo.getId();
 	}
