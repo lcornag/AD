@@ -1,6 +1,7 @@
 package org.institutoserpis.ad;
 
 import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,7 +32,6 @@ public class Articulo {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
 	@ManyToOne
 	@JoinColumn(name="categoria")
 	public Categoria getCategoria() {
