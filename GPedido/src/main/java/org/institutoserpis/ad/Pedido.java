@@ -9,6 +9,7 @@ public class Pedido {
 	private Long id;
 	private Cliente cliente;
 	private Calendar fecha;
+	private List<PedidoLinea> pedidoLineas = new ArrayList<>();
 	
 	@Id
 	@GeneratedValue(generator="increment")
@@ -32,5 +33,21 @@ public class Pedido {
 	}
 	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
+	}
+	
+	@Override
+	public String toString(){
+		return String.format("%s, [cliente-%s] %s", 
+				id, 
+				cliente == null ? null : cliente.getId(),
+				fecha == null ? null : fecha.getTime()
+				);
+	}
+	@OneToMany(mappedBy="pedido", cascade=CascadeType.ALL)
+	public List<PedidoLinea> getPedidoLineas() {
+		return pedidoLineas;
+	}
+	public void setPedidoLineas(List<PedidoLinea> pedidoLineas) {
+		this.pedidoLineas = pedidoLineas;
 	}
 }
